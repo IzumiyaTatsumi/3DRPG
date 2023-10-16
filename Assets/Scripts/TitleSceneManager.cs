@@ -13,10 +13,10 @@ public class TitleSceneManager : MonoBehaviour
 
     public void OnEndButton()
     {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
-        #endif
+#endif
     }
 }

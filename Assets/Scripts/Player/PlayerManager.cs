@@ -23,7 +23,9 @@ public class PlayerManager : MonoBehaviour
     Rigidbody rb;
     Animator animator;
 
-    // Update前に一回だけ実行
+    /// <summary>
+    /// 開始時(Update前に一回だけ実行)
+    /// </summary>
     void Start()
     {
         hp = maxhp;
@@ -35,6 +37,9 @@ public class PlayerManager : MonoBehaviour
         HideColliderWeapon();
     }
 
+    /// <summary>
+    /// 更新時処理
+    /// </summary>
     // 約0.02秒に一回実行
     void Update()
     {
@@ -47,9 +52,9 @@ public class PlayerManager : MonoBehaviour
         // キーボード入力移動(横x縦z
         x = Input.GetAxisRaw("Horizontal");
         z = Input.GetAxisRaw("Vertical");
-        
+
         // 攻撃入力
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             Attack();
         }
@@ -58,6 +63,9 @@ public class PlayerManager : MonoBehaviour
         IncreaseStamina();
     }
 
+    /// <summary>
+    /// 更新時処理
+    /// </summary>
     void IncreaseStamina()
     {
         // スタミナ自動回復
@@ -69,12 +77,15 @@ public class PlayerManager : MonoBehaviour
         playerUIManager.UpdateStamina(stamina);
     }
 
+    /// <summary>
+    /// 攻撃時処理
+    /// </summary>
     void Attack()
     {
         //Debug.Log("攻撃!!");
-        
+
         // もしスタミナがあったら攻撃
-        if(stamina >= 90)
+        if (stamina >= 90)
         {
             stamina -= 90;
             playerUIManager.UpdateStamina(stamina);
@@ -84,16 +95,22 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 相手の方に体を向ける処理
+    /// </summary>
     void LookAtTarget()
     {
         // 敵と一定の距離だったら敵の方に方向を向ける
         float distance = Vector3.Distance(transform.position, target.position);
-        if(distance <= 2f)
+        if (distance <= 2f)
         {
             transform.LookAt(target);
         }
     }
 
+    /// <summary>
+    /// 一定時間毎に更新処理
+    /// </summary>
     private void FixedUpdate()
     {
         // 死んでいたら入力を受け付けない
@@ -113,23 +130,31 @@ public class PlayerManager : MonoBehaviour
         animator.SetFloat("Speed", rb.velocity.magnitude);
     }
 
-    // 武器の判定を有効にしたり消したりする関数
-    // 降り下ろした後
+    /// <summary>
+    /// 武器降り下ろし後処理
+    /// </summary>
     public void HideColliderWeapon()
     {
+        // 武器判定無効
         weaponCollider.enabled = false;
     }
 
-    // 降り下ろす前
+    /// <summary>
+    /// 武器降り下ろし前処理
+    /// </summary>
     public void ShowColliderWeapon()
     {
+        // 武器判定有効
         weaponCollider.enabled = true;
     }
 
+    /// <summary>
+    /// ダメージ計算時処理
+    /// </summary>
     void Damage(int damage)
     {
         hp -= damage;
-        if(hp <= 0)
+        if (hp <= 0)
         {
             hp = 0;
             isDie = true;
@@ -145,6 +170,9 @@ public class PlayerManager : MonoBehaviour
         //Debug.Log("残りHP:" + hp);
     }
 
+    /// <summary>
+    /// 当たり判定処理
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         // 死んでいたらダメージを受けない

@@ -17,6 +17,9 @@ public class EnemyManager : MonoBehaviour
     public int maxhp = 100;
     int hp;
 
+    /// <summary>
+    /// 開始時(Update前に一回だけ実行)
+    /// </summary>
     void Start()
     {
         hp = maxhp;
@@ -76,7 +79,7 @@ public class EnemyManager : MonoBehaviour
         // ダメージを与えるものにぶつかったら
         Damager damager = other.GetComponent<Damager>();
 
-        if(damager != null)
+        if (damager != null)
         {
             Debug.Log("敵ダメージを受ける");
             animator.SetTrigger("Hurt");
